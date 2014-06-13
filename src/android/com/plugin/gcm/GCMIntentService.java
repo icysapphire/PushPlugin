@@ -76,6 +76,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 				extras.putBoolean("foreground", false);
 
                 // Send a notification if there is a message
+                Log.d(TAG, "**************************"+extras.getString("message")+"******************");
                 if (extras.getString("message") != null && extras.getString("message").length() != 0) {
                 	if(extras.getString("message")=="cancelAll") { 
                 		Log.d(TAG, "@@@@@@@@@@CancelALL###");
