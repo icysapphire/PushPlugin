@@ -77,7 +77,9 @@ public class GCMIntentService extends GCMBaseIntentService {
 
                 // Send a notification if there is a message
                 if (extras.getString("message") != null && extras.getString("message").length() != 0) {
-                	if(extras.getString("message")=="cancelAll") { cancelNotification(context); }
+                	if(extras.getString("message")=="cancelAll") { 
+                		Log.d(TAG, "@@@@@@@@@@CancelALL###");
+                		cancelNotification(context); }
                 	else {                    createNotification(context, extras); }
                 }
             }
