@@ -179,6 +179,10 @@ public class PushPlugin extends CordovaPlugin {
 				{
 					json.put(key, extras.getBoolean("coldstart"));
 				}
+				else if (key.equals("tapped"))
+				{
+					json.put(key, extras.getBoolean("tapped"));
+				}
 				else
 				{
 					// Maintain backwards compatibility
