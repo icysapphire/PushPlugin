@@ -72,14 +72,14 @@ public class GCMIntentService extends GCMBaseIntentService {
 				extras.putBoolean("foreground", true);
                 PushPlugin.sendExtras(extras);
 			}
-			else {
-				extras.putBoolean("foreground", false);
+			
+			
+		if((PushPlugin.isInForeground() && extras.getString("display_notification").equals("always")) || !PushPlugin.isInForegound()) {
+				extras.putBoolean("foreground", PushPlugin.isInForeground());
 
                 // Send a notification if there is a message
-                Log.d(TAG, "**************************"+extras.getString("message")+"******************");
                 if (extras.getString("message") != null && extras.getString("message").length() != 0) {
                 	if(extras.getString("message").equals("cancelAll")) { 
-                		Log.d(TAG, "@@@@@@@@@@CancelALL###");
                 		cancelNotification(context); }
                 	else {                    createNotification(context, extras); }
                 }
