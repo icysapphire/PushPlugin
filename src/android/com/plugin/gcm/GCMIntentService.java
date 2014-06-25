@@ -74,7 +74,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 			}
 			
 			
-		if((PushPlugin.isInForeground() && extras.getString("display_notification").equals("always")) || !PushPlugin.isInForegound()) {
+		if((PushPlugin.isInForeground() && extras.getString("display_notification").equals("always")) || !(PushPlugin.isInForegound())) {
 				extras.putBoolean("foreground", PushPlugin.isInForeground());
 
                 // Send a notification if there is a message
