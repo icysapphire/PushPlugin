@@ -44,7 +44,7 @@ Log.v(TAG, "onRegistered: " + json.toString());
 
 // Send this JSON data to the JavaScript application above EVENT should be set to the msg type
 // In this case this is the registration ID
-PushPlugin.sendJavascript( json );
+PushPlugin.sendJavascript( json, "" );
 
 }
 catch( JSONException e)
