@@ -102,8 +102,14 @@ public class PushPlugin extends CordovaPlugin {
 	 * Sends a json object to the client as parameter to a method which is defined in gECB.
 	 */
 	public static void sendJavascript(JSONObject _json, String event) {
-		if(event.equals("touch") && gTouch!=null) String _d = "javascript:" + gTouch + "(" + _json.toString() + ")";
-		else if(event.equals("") && gECB!=null) String _d = "javascript:" + gECB + "(" + _json.toString() + ")";
+		if(event.equals("touch") && gTouch!=null) {
+			String _d = "javascript:" + gTouch + "(" + _json.toString() + ")";
+		}
+		else {
+			if(event.equals("") && gECB!=null) {
+				String _d = "javascript:" + gECB + "(" + _json.toString() + ")";
+			}
+		}
 		Log.v(TAG, "sendJavascript: " + _d);
 
 		if ((event.equals("") && gECB != null && gWebView != null) || (event.equals("touch") && gTouch != null && gWebView != null)) {
