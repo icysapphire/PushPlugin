@@ -104,11 +104,11 @@ public class PushPlugin extends CordovaPlugin {
 	public static void sendJavascript(JSONObject _json, String event) {
 		String _d = "";
 		if(event.equals("touch") && gTouch!=null) {
-			String _d = "javascript:" + gTouch + "(" + _json.toString() + ")";
+			_d = "javascript:" + gTouch + "(" + _json.toString() + ")";
 		}
 		else {
 			if(event.equals("") && gECB!=null) {
-				String _d = "javascript:" + gECB + "(" + _json.toString() + ")";
+				_d = "javascript:" + gECB + "(" + _json.toString() + ")";
 			}
 		}
 		Log.v(TAG, "sendJavascript: " + _d);
