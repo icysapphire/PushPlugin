@@ -30,8 +30,10 @@ public class PushPlugin extends CordovaPlugin {
 
 	private static CordovaWebView gWebView;
 	private static String gECB;
+	private static String gTouch;
 	private static String gSenderID;
 	private static Bundle gCachedExtras = null;
+	private static String gCachedEvent;
     private static boolean gForeground = false;
 
 	/**
@@ -60,6 +62,7 @@ public class PushPlugin extends CordovaPlugin {
 				Log.v(TAG, "execute: jo=" + jo.toString());
 
 				gECB = (String) jo.get("ecb");
+				gTouch = (String) jo.get("touch");
 				gSenderID = (String) jo.get("senderID");
 
 				Log.v(TAG, "execute: ECB=" + gECB + " senderID=" + gSenderID);
@@ -75,7 +78,7 @@ public class PushPlugin extends CordovaPlugin {
 
 			if ( gCachedExtras != null) {
 				Log.v(TAG, "sending cached extras");
-				sendExtras(gCachedExtras);
+				sendExtras(gCachedExtras, gCachedEvent);
 				gCachedExtras = null;
 			}
 			
@@ -98,11 +101,12 @@ public class PushPlugin extends CordovaPlugin {
 	/*
 	 * Sends a json object to the client as parameter to a method which is defined in gECB.
 	 */
-	public static void sendJavascript(JSONObject _json) {
-		String _d = "javascript:" + gECB + "(" + _json.toString() + ")";
+	public static void sendJavascript(JSONObject _json, String event) {
+		if(event.equals("touch") && gTouch!=null) String _d = "javascript:" + gTouch + "(" + _json.toString() + ")";
+		else if(event.equals("") && gECB!=null) String _d = "javascript:" + gECB + "(" + _json.toString() + ")";
 		Log.v(TAG, "sendJavascript: " + _d);
 
-		if (gECB != null && gWebView != null) {
+		if ((event.equals("") && gECB != null && gWebView != null) || (event.equals("touch") && gTouch != null && gWebView != null)) {
 			gWebView.sendJavascript(_d); 
 		}
 	}
@@ -111,14 +115,15 @@ public class PushPlugin extends CordovaPlugin {
 	 * Sends the pushbundle extras to the client application.
 	 * If the client application isn't currently active, it is cached for later processing.
 	 */
-	public static void sendExtras(Bundle extras)
+	public static void sendExtras(Bundle extras, String event)
 	{
 		if (extras != null) {
-			if (gECB != null && gWebView != null) {
-				sendJavascript(convertBundleToJson(extras));
+			if ((gECB != null || gTouch != null) && gWebView != null) {
+				sendJavascript(convertBundleToJson(extras),event);
 			} else {
 				Log.v(TAG, "sendExtras: caching extras to send at a later time.");
 				gCachedExtras = extras;
+				gCachedEvent = event;
 			}
 		}
 	}
@@ -146,6 +151,7 @@ public class PushPlugin extends CordovaPlugin {
         super.onDestroy();
         gForeground = false;
 		gECB = null;
+		gTouch = null;
 		gWebView = null;
     }
 
@@ -171,17 +177,9 @@ public class PushPlugin extends CordovaPlugin {
 				{
 					json.put(key, value);
 				}
-				else if (key.equals("foreground"))
+				else if (key.equals("foreground") || key.equals("coldstart") || key.equals("tapped"))
 				{
-					json.put(key, extras.getBoolean("foreground"));
-				}
-				else if (key.equals("coldstart"))
-				{
-					json.put(key, extras.getBoolean("coldstart"));
-				}
-				else if (key.equals("tapped"))
-				{
-					json.put(key, extras.getBoolean("tapped"));
+					json.put(key, extras.getBoolean(key));
 				}
 				else
 				{
