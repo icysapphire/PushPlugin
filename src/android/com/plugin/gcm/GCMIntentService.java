@@ -107,8 +107,8 @@ new NotificationCompat.Builder(context)
 .setContentTitle(extras.getString("title"))
 .setTicker(extras.getString("title"))
 .setContentIntent(contentIntent);
-if(extras.getString("vibrate").equals("pattern") mBuilder.setVibrate(pattern);
-if(extras.getString('large_icon')!=null)  mBuilder.setLargeIcon(bitmap);
+if(extras.getString("vibrate").equals("pattern")) mBuilder.setVibrate(pattern);
+if(extras.getString("large_icon")!=null)  mBuilder.setLargeIcon(bitmap);
 String message = extras.getString("message");
 if (message != null) {
 mBuilder.setContentText(message);
@@ -145,7 +145,6 @@ public void onError(Context context, String errorId) {
 Log.e(TAG, "onError - errorId: " + errorId);
 }
 
-}
 public Bitmap getBitmapFromURL(String strURL) {
 
 try {
@@ -163,3 +162,6 @@ return myBitmap;
  return null;
 }
 }
+
+}
+
