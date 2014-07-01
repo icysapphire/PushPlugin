@@ -96,7 +96,9 @@ notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVI
 notificationIntent.putExtra("pushBundle", extras);
 
 PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+String userImage = extras.getString("large_icon");
 
+long[] pattern = {0, 500, 100, 500, 100};
 NotificationCompat.Builder mBuilder =
 new NotificationCompat.Builder(context)
 .setDefaults(Notification.DEFAULT_ALL)
@@ -105,7 +107,8 @@ new NotificationCompat.Builder(context)
 .setContentTitle(extras.getString("title"))
 .setTicker(extras.getString("title"))
 .setContentIntent(contentIntent);
-
+if(extras.getString("vibrate").equals("pattern") mBuilder.setVibrate(pattern);
+if(extras.getString('large_icon')!=null)  mBuilder.setLargeIcon(bitmap);
 String message = extras.getString("message");
 if (message != null) {
 mBuilder.setContentText(message);
@@ -142,4 +145,21 @@ public void onError(Context context, String errorId) {
 Log.e(TAG, "onError - errorId: " + errorId);
 }
 
+}
+public Bitmap getBitmapFromURL(String strURL) {
+
+try {
+
+URL url = new URL(strURL);
+
+HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+connection.setDoInput(true);
+connection.connect();
+InputStream input = connection.getInputStream();
+Bitmap myBitmap = BitmapFactory.decodeStream(input);
+return myBitmap;
+} catch (IOException e) {
+ e.printStackTrace();
+ return null;
+}
 }
