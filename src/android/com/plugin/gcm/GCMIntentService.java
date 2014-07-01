@@ -116,7 +116,8 @@ new NotificationCompat.Builder(context)
 .setTicker(extras.getString("title"))
 .setContentIntent(contentIntent);
 if(extras.getString("vibrate").equals("pattern")) mBuilder.setVibrate(pattern);
-if(extras.getString("large_icon")!=null)  mBuilder.setLargeIcon(bitmap);
+if(extras.getString("large_icon")!=null)   {Bitmap bitmap = getBitmapFromURL(userImage);
+mBuilder.setLargeIcon(bitmap);}
 String message = extras.getString("message");
 if (message != null) {
 mBuilder.setContentText(message);
