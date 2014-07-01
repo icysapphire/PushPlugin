@@ -18,6 +18,14 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import java.net.URL;
+import java.net.HttpURLConnection;
+import java.io.InputStream;
+import java.io.IOException;
+
 @SuppressLint("NewApi")
 public class GCMIntentService extends GCMBaseIntentService {
 
