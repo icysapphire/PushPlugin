@@ -75,6 +75,7 @@ Log.d(TAG, "onMessage - context: " + context);
 Bundle extras = intent.getExtras();
 if (extras != null)
 {
+           Log.v(TAG, "TargetPage: " + extras.getString("targetPage"));
 // if we are in the foreground, just surface the payload, else post it to the statusbar
             if (PushPlugin.isInForeground() && PushPlugin.getPage().equals(extras.getString("targetPage"))) {
 extras.putBoolean("foreground", true);
