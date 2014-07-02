@@ -93,7 +93,7 @@ public class PushPlugin extends CordovaPlugin {
 		} else if ("setPage".equals(action)) {
 			try {
 				JSONObject jo = data.getJSONObject(0);
-				gPage = (String) jo.toString()
+				gPage = (String) jo.toString();
 				Log.v(TAG, "setPage: " + gPage);
 				
 				callbackContext.success();
