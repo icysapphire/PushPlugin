@@ -148,6 +148,11 @@ public class PushPlugin extends CordovaPlugin {
 		}
 	}
 	
+	public static void getPage()
+	{
+		return gPage;
+	}
+	
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
