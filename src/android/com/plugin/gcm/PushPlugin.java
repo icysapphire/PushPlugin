@@ -34,6 +34,7 @@ public class PushPlugin extends CordovaPlugin {
 	private static String gSenderID;
 	private static Bundle gCachedExtras = null;
 	private static String gCachedEvent;
+	private static String gPage;
     private static boolean gForeground = false;
 
 	/**
@@ -89,6 +90,18 @@ public class PushPlugin extends CordovaPlugin {
 			Log.v(TAG, "UNREGISTER");
 			result = true;
 			callbackContext.success();
+		} else if ("setPage".equals(action)) {
+			try {
+				JSONObject jo = data.getJSONObject(0);
+				gPage = jo.get("page");
+				
+				callbackContext.success();
+			} catch (JSONException e) {
+				Log.e(TAG, "execute: Got JSON Exception " + e.getMessage());
+				result = false;
+				callbackContext.error(e.getMessage());
+			}
+
 		} else {
 			result = false;
 			Log.e(TAG, "Invalid action : " + action);
