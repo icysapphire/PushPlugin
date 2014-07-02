@@ -148,7 +148,7 @@ public class PushPlugin extends CordovaPlugin {
 		}
 	}
 	
-	public static void getPage()
+	public static String getPage()
 	{
 		return gPage;
 	}
