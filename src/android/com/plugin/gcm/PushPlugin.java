@@ -14,7 +14,7 @@ import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
-
+import android.app.NotificationManager;
 import com.google.android.gcm.*;
 
 /**
@@ -102,6 +102,14 @@ public class PushPlugin extends CordovaPlugin {
 				result = false;
 				callbackContext.error(e.getMessage());
 			}
+
+		} else if ("cancelNotification".equals(action)) {
+			try {
+				context = getApplicationContext();
+				String appName =(String) context.getPackageManager().getApplicationLabel(context.getApplicationInfo());
+				NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+				mNotificationManager.cancel(appName, 237);	
+			} 
 
 		} else {
 			result = false;
