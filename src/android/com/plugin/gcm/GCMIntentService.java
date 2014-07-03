@@ -15,6 +15,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.R;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -118,6 +119,10 @@ new NotificationCompat.Builder(context)
 .setContentIntent(contentIntent);
 if(extras.getString("vibrate").equals("pattern")) mBuilder.setVibrate(pattern);
 if(extras.getString("large_icon")!=null)   {Bitmap bitmap = getBitmapFromURL(userImage);
+Resources res = context.getResources();
+int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false); 
 mBuilder.setLargeIcon(bitmap);}
 String message = extras.getString("message");
 if (message != null) {
