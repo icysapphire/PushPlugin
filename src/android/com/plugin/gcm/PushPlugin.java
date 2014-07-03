@@ -105,7 +105,7 @@ public class PushPlugin extends CordovaPlugin {
 
 		} else if ("cancelNotification".equals(action)) {
 			
-				context = getApplicationContext();
+				Context context = getApplicationContext();
 				String appName =(String) context.getPackageManager().getApplicationLabel(context.getApplicationInfo());
 				NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 				mNotificationManager.cancel(appName, 237);	
